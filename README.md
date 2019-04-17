@@ -9,7 +9,7 @@ pip3 install Adafruit_DHT
 
 pip3 install wiringpi
 
-The CPM is executed through the file "cpm.py"
+The CPM is executed through the file "cpm.py". All configuration tables are defined through a specific txt file in the directoy "\table". So, there are the "context.txt"
 
 Author Daniel G. Costa 
 http://lara.uefs.br
