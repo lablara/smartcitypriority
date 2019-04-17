@@ -40,19 +40,22 @@ fe = 1.0
 fc = 1.0
 C = 'a1cdefghijklmnop'
 
+#temperature threshold
+threshold = 40
+
 #Tables to be received from the CPM
 eventTable = None
 contextTable = None
 
 #GPIO pins
-pin1 = 21
-pin2 = 20
-pin3 = 16
-pin4 = 23
-pin5 = 12
-pin6 = 18
-pin7 = 27
-pin8 = 17
+pin1 = 17 #Led for a=1
+pin2 = 18 #Led for a=2
+pin3 = 21 #Led for a=3 
+pin4 = 22 #Led when temperature is higher than the threshold
+pin5 = 23 #Button to select the value of a
+pin6 = 24 #DHT data pin
+pin7 = 25 #TM1367 CLK
+pin8 = 4  #TM1367 DIO
 
 #Hardware configurations
 yellowLed = LED (pin1)
@@ -61,7 +64,7 @@ greenLed = LED (pin3)
 tempLed = LED (pin4)
 button = Button (pin5)
 
-#Initiliaze display
+#Initiliaze display: CLK and DIO
 display = TM1367(pin7,pin8)
 
 #Sensor unit
@@ -77,6 +80,8 @@ port = 42100
 
 #temperature sensor reading
 class tempThread (threading.Thread):
+    global threshold
+
     def __init__(self):
         threading.Thread.__init__(self)
       
@@ -85,7 +90,7 @@ class tempThread (threading.Thread):
             humidity, temperature = Adafruit_DHT.read_retry(sensor, pin6)
             #print (temperature)
             
-            if temperature >= 40: #threshold                
+            if temperature >= threshold:                
                 tempLed.on()
                 computePriority()                    
         

@@ -11,8 +11,8 @@ from time import time, sleep, localtime
 from wiringpi import wiringPiSetupGpio, pinMode, digitalRead, digitalWrite, GPIO
 wiringPiSetupGpio()
 
-CLK = 27
-DIO = 17
+CLK = 0
+DIO = 0
 
 class TM1367:
     I2C_COMM1 = 0x40
