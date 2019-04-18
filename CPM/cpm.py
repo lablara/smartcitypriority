@@ -14,21 +14,19 @@ from Crypto.Cipher import AES
 from CPMTables import NT, ET, CT  
 
 #Configurations tables
-nodes=0
-events=[]
-contexts = 0
+nodes = None
+events = []
+contexts = None
 
 maximumEvents = 3
 
 #Criptography keys for 3 different "application"
 C = ['a1cdefghijklmnop','a2cdefghijklmnop', 'a3cdefghijklmnop']
 
-#print_lock = threading.Lock()
-# This thread manages the connections with the nodes 
+#This thread manages the connections with the nodes 
 def threaded(c, address): 
     #Communication follows the definitions in the Article
         
-    #Phase 1: Node sends its value of application (a)
     nodeApplication = 0
     
     #Receiving the value of a
@@ -91,7 +89,6 @@ def threaded(c, address):
     
     # connection closed 
     print ("Sensor", address, "disconnected.")
-    #print_lock.release() 
     c.close()
 
 def encrypt(raw,  key):
@@ -104,7 +101,6 @@ def decrypt(enc,  key):
     iv = enc[:16]
     cipher = AES.new(key, AES.MODE_CFB, iv )
     return cipher.decrypt( enc[16:] )
-
     
 
 #Check if a node is inside the NT. True if it is inside    
@@ -201,20 +197,18 @@ def Main():
     
     print("CPM is ready and waiting connections at port", port, "...") 
     
-    # put the socket into listening mode 
+    #Put the socket into listening mode 
     s.listen() 
 
     try:
         while True: 
         
-            # establish connection with client 
+            #Establish connection with client 
             c, addr = s.accept() 
   
-            # lock acquired by client 
-            #print_lock.acquire() 
             print('\nNew sensor connected:', addr[0], ':', addr[1]) 
   
-            # Start a new thread to manage the communication
+            #Start a new thread to manage the communication
             start_new_thread(threaded, (c,addr[0])) 
     except:
         print ("CPM is closing...")
