@@ -1,12 +1,3 @@
-# *********************************************************************
-# This is a auxiliary module to manage all configuration tables
-# This file is used by Sensor Nodes and the CPM
-#
-# Author: Daniel G. Costa
-#
-# *********************************************************************
-
-
 class NT:
     def __init__(self):
         self.nodes = []
@@ -15,12 +6,20 @@ class NT:
         node = Node(addr,  a)
         self.nodes.append(node)
     
+    def removeNode(self, node):
+        self.nodes.remove(node)
+    
     def getNodes (self):
         return self.nodes
         
     def  printValues(self):
-        for node in self.nodes:
-            print ("Adrress:",  node.getAddress(),  ": a =", node.getApplication())
+    	cont = 0
+    	for node in self.nodes:
+    		print ("Adrress:",  node.getAddress(),  ": a =", node.getApplication())
+    		cont += 1
+    		
+    	if cont == 0:
+    		print ("Nodes Table is empty")
 
 class Node:
     def __init__(self, ip,  a):
@@ -29,6 +28,9 @@ class Node:
         
     def getApplication (self):
         return self.application
+    
+    def setApplication (self, a):
+        self.application = a
     
     def getAddress (self):
         return self.address
@@ -78,7 +80,7 @@ class CT:
     def getContexts (self):
         return self.contexts
         
-    def printValues(self):
+    def  printValues(self):
         count = 0
         for context in self.contexts:
             if count != int(context.getContext()):
