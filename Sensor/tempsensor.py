@@ -38,7 +38,9 @@ Pmin = 1
 priority = Pmin
 fe = 1.0
 fc = 1.0
-C = 'a1cdefghijklmnop'
+C = 'a1cdefghijklmnop' # a=1
+#C = 'a2cdefghijklmnop' a=2
+#C = 'a3cdefghijklmnop' a=3
 
 #temperature threshold
 threshold = 40
@@ -71,7 +73,7 @@ display = TM1367(pin7,pin8)
 sensor = Adafruit_DHT.DHT22
 
 #Communication definitions
-address = "192.168.0.31" #CPM address
+address = "192.168.0.1" #CPM address
 port = 42100
 
 
@@ -213,7 +215,6 @@ def decrypt(enc, key):
 
 #Method called when button is pressed
 def changeApplication ():
-    
     global application    
 
     if application == 3:
