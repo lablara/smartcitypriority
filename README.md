@@ -13,6 +13,7 @@ The CPM is executed through the file "cpm.py". All configuration tables are defi
 
 ------------
 Author Daniel G. Costa 
+
 danielgcosta@uefs.br
 http://lara.uefs.br
 http://www.uefs.br/danielgcosta
