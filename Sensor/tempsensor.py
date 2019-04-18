@@ -38,6 +38,7 @@ Pmin = 1
 priority = Pmin
 fe = 1.0
 fc = 1.0
+#Criptography key
 C = 'a1cdefghijklmnop' # a=1
 #C = 'a2cdefghijklmnop' a=2
 #C = 'a3cdefghijklmnop' a=3
