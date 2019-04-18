@@ -6,16 +6,20 @@ class NT:
         node = Node(addr,  a)
         self.nodes.append(node)
     
-    def removeNode(self, addr,  a):
-        node = Node(addr,  a)
+    def removeNode(self, node):
         self.nodes.remove(node)
     
     def getNodes (self):
         return self.nodes
         
     def  printValues(self):
-        for node in self.nodes:
-            print ("Adrress:",  node.getAddress(),  ": a =", node.getApplication())
+    	cont = 0
+    	for node in self.nodes:
+    		print ("Adrress:",  node.getAddress(),  ": a =", node.getApplication())
+    		cont += 1
+    		
+    	if cont == 0:
+    		print ("Nodes Table is empty")
 
 class Node:
     def __init__(self, ip,  a):
@@ -24,6 +28,9 @@ class Node:
         
     def getApplication (self):
         return self.application
+    
+    def setApplication (self, a):
+        self.application = a
     
     def getAddress (self):
         return self.address

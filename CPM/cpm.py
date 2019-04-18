@@ -23,7 +23,7 @@ maximumEvents = 3
 #Criptography keys for 3 different "application"
 C = ['a1cdefghijklmnop','a2cdefghijklmnop', 'a3cdefghijklmnop']
 
-print_lock = threading.Lock()
+#print_lock = threading.Lock()
 # This thread manages the connections with the nodes 
 def threaded(c, address): 
     #Communication follows the definitions in the Article
@@ -79,16 +79,19 @@ def threaded(c, address):
             else:
                 #Challenge failed
                 print ("Node failed the challenge.")
+                removeFromNodes(address, nodeApplication)
                 c.sendall(bytes('0', 'utf8'))
         else:
             print ("Informed value of a is invalid.")
+            removeFromNodes(address, nodeApplication)
        
     except:
             print ("Challenge failed.")
+            removeFromNodes(address, nodeApplication)
     
     # connection closed 
     print ("Sensor", address, "disconnected.")
-    print_lock.release() 
+    #print_lock.release() 
     c.close()
 
 def encrypt(raw,  key):
@@ -115,38 +118,35 @@ def checkNodesTable(addr,  a):
                 
     return control
 
-def insertIntoNodes(addr,  a):
+def insertIntoNodes(addr, a):
     global nodes
     control = True
     for node in nodes.getNodes():
         if node.getAddress() == addr:
-            if node.getApplication() == a:
-                control = False
+        	#Update NT
+        	node.setApplication(a)
+        	control = False
+
+    if control:
+    	nodes.putNode(addr, a)
     
-    if control == True:
-        nodes.putNode(addr, a)
-        print ("\nUpdated list of registered nodes:")
-        nodes.printValues()
-        print ("")
+    print ("\nUpdated list of registered nodes (NT):")
+    nodes.printValues()
+    print ("")
+
     
-    return control
-    
-def removeFromNodes(addr,  a):
+def removeFromNodes(addr, a):
     global nodes
-    control = False
+
     for node in nodes.getNodes():
         if node.getAddress() == addr:
-            if node.getApplication() == a:
-                control = True
+        	nodes.removeNode(node)
     
-    if control == True:
-        nodes.removeNode(addr, a)
-        print ("\nUpdated list of registered nodes:")
-        nodes.printValues()
-        print ("")
-        
-    return control
-    
+    print ("\nUpdated list of registered nodes (NT):")
+    nodes.printValues()
+    print ("")
+
+
 #This method reads all table files and create lists with the informations
 def readTables():
     #Nodes table
@@ -211,8 +211,8 @@ def Main():
             c, addr = s.accept() 
   
             # lock acquired by client 
-            print_lock.acquire() 
-            print('New sensor connected:', addr[0], ':', addr[1]) 
+            #print_lock.acquire() 
+            print('\nNew sensor connected:', addr[0], ':', addr[1]) 
   
             # Start a new thread to manage the communication
             start_new_thread(threaded, (c,addr[0])) 
