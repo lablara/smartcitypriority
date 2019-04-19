@@ -39,9 +39,9 @@ priority = Pmin
 fe = 1.0
 fc = 1.0
 #Criptography key
-C = 'a1cdefghijklmnop' # a=1
-#C = 'a2cdefghijklmnop' a=2
-#C = 'a3cdefghijklmnop' a=3
+Cr = 'a1cdefghijklmnop' # a=1
+#Cr = 'a2cdefghijklmnop' a=2
+#Cr = 'a3cdefghijklmnop' a=3
 
 #temperature threshold
 threshold = 40
@@ -105,7 +105,7 @@ class tempThread (threading.Thread):
 
 
 #Compute the value of Pf, according to the received tables
-#If ET and Ct are not receievd, priority is not computed            
+#If ET and CT are not receievd, priority is not computed            
 def computePriority():
 
     global eventTable
@@ -148,7 +148,7 @@ def getTablesCPM():
 
     #Waits for the answer of the CPM. Challenge to be answered
     clg = s.recv(1024)
-    challenge = decrypt(clg, C)
+    challenge = decrypt(clg, Cr)
     
     try:
         challenge = int(challenge)
@@ -156,7 +156,7 @@ def getTablesCPM():
         if challenge != 0:
             #Sends the answer back to the CPM
             number = challenge * challenge            
-            answer = encrypt(str(number), C)            
+            answer = encrypt(str(number), Cr)            
             s.sendall(answer)
 
             #Waiting for the ET table
