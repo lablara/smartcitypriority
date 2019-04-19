@@ -21,7 +21,7 @@ contexts = None
 maximumEvents = 3
 
 #Criptography keys for 3 different "application"
-C = ['a1cdefghijklmnop','a2cdefghijklmnop', 'a3cdefghijklmnop']
+Cr = ['a1cdefghijklmnop','a2cdefghijklmnop', 'a3cdefghijklmnop']
 
 #This thread manages the connections with the nodes 
 def threaded(c, address): 
@@ -44,12 +44,12 @@ def threaded(c, address):
             #Starting challenge
             numberInitial = str(random.randint(1, 101))
             #padding must be added
-            challenge = encrypt(numberInitial,  C[nodeApplication-1])
+            challenge = encrypt(numberInitial,  Cr[nodeApplication-1])
             c.sendall(challenge)
     
             #Wait for the answer from the node
             result = c.recv(1024)
-            answer = decrypt(result,  C[nodeApplication-1])
+            answer = decrypt(result,  Cr[nodeApplication-1])
             
             #challenge test
             if int(answer) == (int(numberInitial) * int(numberInitial)):
