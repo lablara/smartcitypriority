@@ -9,7 +9,7 @@ pip3 install Adafruit_DHT
 
 pip3 install wiringpi
 
-Other important remark is when creating the temperature sensor in a Raspberry Pi board. The following variables have to be properly defined in the tempsensor.py file, according to the implemented connections of the components.
+Other important remark is when creating the temperature sensor in a Raspberry Pi board. The following variables have to be properly defined in the "tempsensor.py file, according to the implemented connections of the components.
 
 pin1 = LED (yellow);
 pin2 = LED (blue);
